@@ -17,6 +17,7 @@ void main(int argc, char *argv[]){
 	inFPtr = fopen (argv[1], "r");
 
     while(loop){
+        //main input loop for stdin version. File version loops on its own. 
         printf(">>> ");
 
         if(argc == 1){
@@ -28,17 +29,24 @@ void main(int argc, char *argv[]){
         else if((argc == 3) && (strcmp(argv[1], "-f") == 0)){
             // If -f flag, reading from file
             inFPtr = fopen (argv[2], "r");
-            getline(&line_buf, &len, inFPtr);
-            printf("Reading from file|%s\n", line_buf);
-            fclose(inFPtr);
-            break;
+            if(inFPtr == NULL){
+                //File does not exist
+                printf("File %s does not exist. Please check the file name again.\n", argv[2]);
+                break;
+            }
+            else {
+                //File exists
+                while((getline(&line_buf, &len, inFPtr) != -1)){
+                    printf("Reading from file|%s\n", line_buf);
+                }
+                fclose(inFPtr);
+                break;
+            }
         }
 
         else{
-            printf("argv[0] is %s\n", argv[0]);
-            printf("argv[1] is %s\n", argv[1]);
-            printf("argv[2] is %s\n", argv[2]);
-            printf("Did not hit either run version\n");
+            //shell usage is incorrect. Prompt to relaunch
+            printf("Usage is: ./pseudo-shell or ./pseudo-shell -f [FILE]\n");
             break;
         }
 
