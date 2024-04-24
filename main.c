@@ -8,22 +8,30 @@
 
 int loop = 1;
 char end[20] = "exit\n";
+const char* delim = ";";
 
 void main(int argc, char *argv[]){
     //declare line_buffer
     size_t len = 128;
     char* line_buf = malloc (len);
     FILE *inFPtr;
-	inFPtr = fopen (argv[1], "r");
 
     while(loop){
         //main input loop for stdin version. File version loops on its own. 
         printf(">>> ");
+        getline (&line_buf, &len, stdin);
+
+        if(strcmp(line_buf, end) == 0){
+            //if user types exit, close the shell
+            break;
+        }
 
         if(argc == 1){
             // If no -f flag is listed, must be listening from stdin
-            getline (&line_buf, &len, stdin);
+            
+            printf("strcmp of input and exit: %d", strcmp(line_buf, end));
             printf("Reading from stdin|%s\n", line_buf);
+            str_filler(line_buf, delim);
         }
 
         else if((argc == 3) && (strcmp(argv[1], "-f") == 0)){
@@ -50,10 +58,7 @@ void main(int argc, char *argv[]){
             break;
         }
 
-        if(strcmp(line_buf, end) == 0){
-            //if user types exit, close the shell
-            break;
-        }
+        
 
         
     }
