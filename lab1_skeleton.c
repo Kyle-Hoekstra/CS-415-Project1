@@ -64,6 +64,7 @@ int tokenizer(char *myfile)
 			for (int j = 0; small_token_buffer.command_list[j] != NULL; j++)
 			{
 				printf ("\t\tToken %d: %s\n", j + 1, small_token_buffer.command_list[j]);
+				which_call(small_token_buffer.command_list[j]);
 			}
 
 			//free smaller tokens and reset variable
