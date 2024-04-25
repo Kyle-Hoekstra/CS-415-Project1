@@ -37,8 +37,6 @@ int main(int argc, char *argv[]){
 
             for (int i = 0; stdinCL_big.command_list[i] != NULL; i++)
 		{
-			    printf ("\tLine segment %d:\n", i + 1);
-
                 //tokenize large buffer
                 //smaller token is seperated by " "(space bar)
                 //fprintf(stderr, "about to smallbuff\n");

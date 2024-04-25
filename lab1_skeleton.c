@@ -98,7 +98,7 @@ void which_call(char **system_call, int num_tokens){
 	}
 
 	else if (strcmp(system_call[0], pwd) == 0){
-		printf("This is the %s command.\n", pwd);
+		showCurrentDir();
 	}
 
 	else if (strcmp(system_call[0], mkdir) == 0){

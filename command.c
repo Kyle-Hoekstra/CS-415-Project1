@@ -42,6 +42,16 @@ void listDir(){
 void showCurrentDir(){
     /*for the pwd command*/
     printf("This the pwd command.\n");
+    int size = 100;
+    char buf[size];
+    if(getcwd(buf, size) == NULL){
+        //size was too small
+        printf("Failure to print working directory.\n");
+    } else {
+        printf("%s\n", buf);
+    }
+
+
 } 
 
 
