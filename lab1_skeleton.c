@@ -134,7 +134,14 @@ void which_call(char **system_call, int num_tokens){
 	}
 
 	else if (strcmp(system_call[0], cat) == 0){
-		printf("This is the %s command.\n", cat);
+		if(num_tokens == 2){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the file to read
+			displayFile(system_call[1]);
+		} else {
+			printf("cat usage: cat [name of file]\n");
+		}
+		
 	}
 
 	else{

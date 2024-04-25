@@ -98,5 +98,25 @@ void deleteFile(char *filename){
 
 void displayFile(char *filename){
     /*for the cat command*/
-    printf("This the displayFile command.\n");
+    FILE *myfile;
+    size_t len = 128;
+	char* line_buf = malloc (len);
+
+
+    myfile = fopen (filename, "r");
+        if(myfile == NULL){
+            //File does not exist
+            printf("File %s does not exist. Please check the file name again.\n", filename);
+        }
+        else {
+            //File exists
+            while (getline (&line_buf, &len, myfile) != -1){
+                printf("%s", line_buf);
+            }
+            // Close file when done
+            printf("\n");
+            fclose(myfile);
+        }
+        // Free malloc line buf afterwards
+        free(line_buf);
 } 
