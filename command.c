@@ -84,6 +84,11 @@ void copyFile(char *sourcePath, char *destinationPath){
 void moveFile(char *sourcePath, char *destinationPath){
     /*for the mv command*/
     printf("This the moveFile command.\n");
+    if(rename(sourcePath, destinationPath) == 0){
+        printf("File %s moved to %s\n", sourcePath, destinationPath);
+    } else {
+        printf("Failure to move file.\n");
+    }
 } 
 
 
