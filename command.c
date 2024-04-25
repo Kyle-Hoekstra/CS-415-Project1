@@ -57,9 +57,11 @@ void showCurrentDir(){
 void makeDir(char *dirName){
     /*for the mkdir command*/
     //Looking at documentation, 0700 allows rwx------
-    if(mkdir(dirName, 0700) == 0){
+    int x = mkdir(dirName, 0700);
+    if(x == 0){
         printf("Directory |%s| created.\n", dirName);
     } else {
+        printf("%d\n", x);
         printf("Failure to create directory.\n");
     }
 }
@@ -68,7 +70,7 @@ void makeDir(char *dirName){
 void changeDir(char *dirName){
     /*for the cd command*/
     if(chdir(dirName) == 0){
-        printf("Changed directory to\n", dirName);
+        printf("Changed directory to %s\n", dirName);
     } else {
         printf("Failure to change directory.\n");
     }
@@ -86,27 +88,27 @@ void copyFile(char *sourcePath, char *destinationPath){
 
     mySource = open(sourcePath, O_RDWR);
     myDest = open(destinationPath, O_CREAT | O_RDWR);
-        if(mySource == -1){
-            //File does not exist
-            printf("File %s does not exist. Please check the file names again.\n", sourcePath);
-        }
-        else {
-            //Files exist
-            //read returns -1 on error and 0 on end of file
-            int end_of_file = read(mySource, line_buf, len);
-            while (end_of_file != 0){
-                // Read a line from source, and write the line to destination
-                if(end_of_file != -1){
-                    write(myDest, line_buf, len);
-                    end_of_file = read(mySource, line_buf, len);
-                }
+    if(mySource == -1){
+        //File does not exist
+        printf("File %s does not exist. Please check the file names again.\n", sourcePath);
+    }
+    else {
+        //Files exist
+        //read returns -1 on error and 0 on end of file
+        int end_of_file = read(mySource, line_buf, len);
+        while (end_of_file != 0){
+            // Read a line from source, and write the line to destination
+            if(end_of_file != -1){
+                write(myDest, line_buf, len);
+                end_of_file = read(mySource, line_buf, len);
             }
-            // Close file when done
-            close(mySource);
-            close(myDest);
         }
-        // Free malloc line buf afterwards
-        free(line_buf);
+        // Close file when done
+        close(mySource);
+        close(myDest);
+    }
+    // Free malloc line buf afterwards
+    free(line_buf);
     
 } 
 

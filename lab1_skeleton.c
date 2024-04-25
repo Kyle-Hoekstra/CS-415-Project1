@@ -94,11 +94,23 @@ void which_call(char **system_call, int num_tokens){
 	
 	// Calls to command.c depending on the call needed
 	if(strcmp(system_call[0], ls) == 0){
-		listDir();
+		if(num_tokens == 1){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the new directory
+			listDir();
+		} else {
+			printf("ls usage: ls\n");
+		}	
 	}
 
 	else if (strcmp(system_call[0], pwd) == 0){
-		showCurrentDir();
+		if(num_tokens == 1){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the new directory
+			showCurrentDir();
+		} else {
+			printf("pwd usage: pwd\n");
+		}	
 	}
 
 	else if (strcmp(system_call[0], mkdir) == 0){

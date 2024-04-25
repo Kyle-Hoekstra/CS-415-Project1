@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
             stdinCL_big = str_filler(line_buf, delim);
 
             for (int i = 0; stdinCL_big.command_list[i] != NULL; i++)
-		{
+		    {
                 //tokenize large buffer
                 //smaller token is seperated by " "(space bar)
                 //fprintf(stderr, "about to smallbuff\n");
@@ -48,34 +48,40 @@ int main(int argc, char *argv[]){
 			//free smaller tokens and reset variable
 			free_command_line(&stdinCL_small);
 			memset (&stdinCL_small, 0, 0);
-		}
+		    }
 
 		//free smaller tokens and reset variable
 		free_command_line (&stdinCL_big);
 		memset (&stdinCL_big, 0, 0);
         }
+        free(line_buf);
         return 0;
-
+    }
 
 // FILE MODE
-    } else if((argc == 3) && (strcmp(argv[1], "-f") == 0)){
+    else if((argc == 3) && (strcmp(argv[1], "-f") == 0)){
             // If -f flag, reading from file
             inFPtr = fopen (argv[2], "r");
             if(inFPtr == NULL){
                 //File does not exist
                 printf("File %s does not exist. Please check the file name again.\n", argv[2]);
+                free(line_buf);
                 return 1;
             }
             else {
                 //File exists
                 tokenizer(argv[2]);
+                fclose(inFPtr);
+                free(line_buf);
                 return 0;
             }
+            
 
 // DID IT WRONG MODE
     } else {
         //shell usage is incorrect. Prompt to relaunch
         printf("Usage is: ./pseudo-shell or ./pseudo-shell -f [FILE]\n");
+        free(line_buf);
         return 1;
     }
         
