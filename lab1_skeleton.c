@@ -122,7 +122,14 @@ void which_call(char **system_call, int num_tokens){
 	}
 
 	else if (strcmp(system_call[0], cp) == 0){
-		printf("This is the %s command.\n", cp);
+		if(num_tokens == 3){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the file to move
+			// system_call[2] is the name of the file/path to move to
+			copyFile(system_call[1], system_call[2]);
+		} else {
+			printf("cp usage: cp [name of source file] [name of destination file]\n");
+		}
 	}
 	
 	else if (strcmp(system_call[0], mv) == 0){

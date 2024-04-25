@@ -16,6 +16,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <fcntl.h>
 #include "command.h"
 
 
@@ -77,13 +78,41 @@ void changeDir(char *dirName){
 
 void copyFile(char *sourcePath, char *destinationPath){
     /*for the cp command*/
-    printf("This the copyFile command.\n");
+    int mySource;
+    int myDest;
+    size_t len = 1;
+    //malloc the space for 1 char
+	char* line_buf = malloc (len*sizeof(char));
+
+    mySource = open(sourcePath, O_RDWR);
+    myDest = open(destinationPath, O_CREAT | O_RDWR);
+        if(mySource == -1){
+            //File does not exist
+            printf("File %s does not exist. Please check the file names again.\n", sourcePath);
+        }
+        else {
+            //Files exist
+            //read returns -1 on error and 0 on end of file
+            int end_of_file = read(mySource, line_buf, len);
+            while (end_of_file != 0){
+                // Read a line from source, and write the line to destination
+                if(end_of_file != -1){
+                    write(myDest, line_buf, len);
+                    end_of_file = read(mySource, line_buf, len);
+                }
+            }
+            // Close file when done
+            close(mySource);
+            close(myDest);
+        }
+        // Free malloc line buf afterwards
+        free(line_buf);
+    
 } 
 
 
 void moveFile(char *sourcePath, char *destinationPath){
     /*for the mv command*/
-    printf("This the moveFile command.\n");
     if(rename(sourcePath, destinationPath) == 0){
         printf("File %s moved to %s\n", sourcePath, destinationPath);
     } else {
