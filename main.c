@@ -16,8 +16,11 @@ int main(int argc, char *argv[]){
     size_t len = 128;
     char* line_buf = malloc (len);
     FILE *inFPtr;
+    command_line stdinCL_big;
+    command_line stdinCL_small;
 
 
+// STSDIN MODE
     if(argc == 1){
         while(loop){
         //main input loop for stdin version. File version loops on its own. 
@@ -30,10 +33,37 @@ int main(int argc, char *argv[]){
             }
                 // If no -f flag is listed, must be listening from stdin
             printf("Reading from stdin|%s\n", line_buf);
-            str_filler(line_buf, delim);
+            stdinCL_big = str_filler(line_buf, delim);
+
+            for (int i = 0; stdinCL_big.command_list[i] != NULL; i++)
+		{
+			    printf ("\tLine segment %d:\n", i + 1);
+
+                //tokenize large buffer
+                //smaller token is seperated by " "(space bar)
+                //fprintf(stderr, "about to smallbuff\n");
+                stdinCL_small = str_filler (stdinCL_big.command_list[i], " ");
+
+                //iterate through each smaller token to print
+                for (int j = 0; stdinCL_small.command_list[j] != NULL; j++)
+                {
+                    printf ("\t\tToken %d: %s\n", j + 1, stdinCL_small.command_list[j]);
+                    which_call(stdinCL_small.command_list[j]);
+                }
+
+			//free smaller tokens and reset variable
+			free_command_line(&stdinCL_small);
+			memset (&stdinCL_small, 0, 0);
+		}
+
+		//free smaller tokens and reset variable
+		free_command_line (&stdinCL_big);
+		memset (&stdinCL_big, 0, 0);
         }
         return 0;
 
+
+// FILE MODE
     } else if((argc == 3) && (strcmp(argv[1], "-f") == 0)){
             // If -f flag, reading from file
             inFPtr = fopen (argv[2], "r");
@@ -48,10 +78,12 @@ int main(int argc, char *argv[]){
                 tokenizer(argv[2]);
                 return 0;
             }
-        } else {
-            //shell usage is incorrect. Prompt to relaunch
-            printf("Usage is: ./pseudo-shell or ./pseudo-shell -f [FILE]\n");
-            return 1;
-        }
+
+// DID IT WRONG MODE
+    } else {
+        //shell usage is incorrect. Prompt to relaunch
+        printf("Usage is: ./pseudo-shell or ./pseudo-shell -f [FILE]\n");
+        return 1;
+    }
         
 }

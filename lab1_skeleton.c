@@ -10,6 +10,7 @@
 #include <string.h>
 #include "string_parser.h"
 #include "lab1_skeleton.h"
+#include "command.h"
 
 #define _GNU_SOURCE
 
@@ -77,4 +78,47 @@ int tokenizer(char *myfile)
 	fclose(inFPtr);
 	//free line buffer
 	free (line_buf);
+}
+
+
+void which_call(char *system_call){
+	//List of possible commands for strcmp
+	char *ls = "ls";
+	char *pwd = "pwd";
+	char *mkdir = "mkdir";
+	char *cd = "cd";
+	char *cp = "cp";
+	char *mv = "mv";
+	char *rm = "rm";
+	char *cat = "cat";
+	
+	// Calls to command.c depending on the call needed
+	if(strcmp(system_call, ls) == 0){
+		printf("This is the %s command.\n", ls);
+	}
+	else if (strcmp(system_call, pwd) == 0){
+		printf("This is the %s command.\n", pwd);
+	}
+	else if (strcmp(system_call, mkdir) == 0){
+		printf("This is the %s command.\n", mkdir);
+	}
+	else if (strcmp(system_call, cd) == 0){
+		printf("This is the %s command.\n", cd);
+	}
+	else if (strcmp(system_call, cp) == 0){
+		printf("This is the %s command.\n", cp);
+	}
+	else if (strcmp(system_call, mv) == 0){
+		printf("This is the %s command.\n", mv);
+	}
+	else if (strcmp(system_call, rm) == 0){
+		printf("This is the %s command.\n", rm);
+	}
+	else if (strcmp(system_call, cat) == 0){
+		printf("This is the %s command.\n", cat);
+	}
+	else{
+		printf("%s is not a valid command in pseudo-shell.\n", system_call);
+	}
+
 }
