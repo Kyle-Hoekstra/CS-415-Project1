@@ -130,7 +130,13 @@ void which_call(char **system_call, int num_tokens){
 	}
 
 	else if (strcmp(system_call[0], rm) == 0){
-		printf("This is the %s command.\n", rm);
+		if(num_tokens == 2){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the file to delete
+			deleteFile(system_call[1]);
+		} else {
+			printf("rm usage: rm [name of file]\n");
+		}
 	}
 
 	else if (strcmp(system_call[0], cat) == 0){

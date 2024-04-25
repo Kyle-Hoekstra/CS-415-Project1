@@ -22,7 +22,6 @@
 void listDir(){
     /*for the ls command*/
     // help from www.ibm.com/docs/es/zos/2.4.0
-    printf("This the listDir command.\n");
     DIR *dir;
     struct dirent *entry;
 
@@ -41,7 +40,6 @@ void listDir(){
 
 void showCurrentDir(){
     /*for the pwd command*/
-    printf("This the pwd command.\n");
     int size = 100;
     char buf[size];
     if(getcwd(buf, size) == NULL){
@@ -68,7 +66,6 @@ void makeDir(char *dirName){
 
 void changeDir(char *dirName){
     /*for the cd command*/
-    printf("This the changeDir command.\n");
     if(chdir(dirName) == 0){
         printf("Changed directory to\n", dirName);
     } else {
@@ -92,7 +89,11 @@ void moveFile(char *sourcePath, char *destinationPath){
 
 void deleteFile(char *filename){
     /*for the rm command*/
-    printf("This the deleteFile command.\n");
+    if(unlink(filename) == 0){
+        printf("File %s deleted\n", filename);
+    } else {
+        printf("Failure to delete file.\n");
+    }
 } 
 
 
