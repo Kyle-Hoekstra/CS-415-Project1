@@ -12,6 +12,6 @@
 
 int tokenizer(char *myfile);
 
-void which_call(char *system_call);
+void which_call(char **system_call, int num_tokens);
 
 #endif /* LAB1_SKELETON_H_ */

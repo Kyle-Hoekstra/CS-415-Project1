@@ -13,44 +13,80 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
 #include "command.h"
 
 
 void listDir(){
     /*for the ls command*/
+    // help from www.ibm.com/docs/es/zos/2.4.0
+    printf("This the listDir command.\n");
+    DIR *dir;
+    struct dirent *entry;
+
+    if((dir = opendir(".")) == NULL){
+        //If directory doesn't open, error
+        printf("Failure to list directory contents.\n");
+    } else {
+        while((entry = readdir(dir)) != NULL){
+            //print all contents of working directory
+            printf("%s\n", entry->d_name);
+        }
+        closedir(dir);
+    }
 } 
 
 
 void showCurrentDir(){
     /*for the pwd command*/
+    printf("This the pwd command.\n");
 } 
 
 
 void makeDir(char *dirName){
     /*for the mkdir command*/
+    //Looking at documentation, 0700 allows rwx------
+    if(mkdir(dirName, 0700) == 0){
+        printf("Directory |%s| created.\n", dirName);
+    } else {
+        printf("Failure to create directory.\n");
+    }
 }
     
 
 void changeDir(char *dirName){
     /*for the cd command*/
+    printf("This the changeDir command.\n");
+    if(chdir(dirName) == 0){
+        printf("Changed directory to\n", dirName);
+    } else {
+        printf("Failure to change directory.\n");
+    }
+
 }
 
 
 void copyFile(char *sourcePath, char *destinationPath){
     /*for the cp command*/
+    printf("This the copyFile command.\n");
 } 
 
 
 void moveFile(char *sourcePath, char *destinationPath){
     /*for the mv command*/
+    printf("This the moveFile command.\n");
 } 
 
 
 void deleteFile(char *filename){
     /*for the rm command*/
+    printf("This the deleteFile command.\n");
 } 
 
 
 void displayFile(char *filename){
     /*for the cat command*/
+    printf("This the displayFile command.\n");
 } 

@@ -63,8 +63,7 @@ int tokenizer(char *myfile)
 			//iterate through each smaller token to print
 			for (int j = 0; small_token_buffer.command_list[j] != NULL; j++)
 			{
-				printf ("\t\tToken %d: %s\n", j + 1, small_token_buffer.command_list[j]);
-				which_call(small_token_buffer.command_list[j]);
+				which_call(small_token_buffer.command_list, small_token_buffer.num_token);
 			}
 
 			//free smaller tokens and reset variable
@@ -82,7 +81,7 @@ int tokenizer(char *myfile)
 }
 
 
-void which_call(char *system_call){
+void which_call(char **system_call, int num_tokens){
 	//List of possible commands for strcmp
 	char *ls = "ls";
 	char *pwd = "pwd";
@@ -94,30 +93,50 @@ void which_call(char *system_call){
 	char *cat = "cat";
 	
 	// Calls to command.c depending on the call needed
-	if(strcmp(system_call, ls) == 0){
-		printf("This is the %s command.\n", ls);
+	if(strcmp(system_call[0], ls) == 0){
+		listDir();
 	}
-	else if (strcmp(system_call, pwd) == 0){
+
+	else if (strcmp(system_call[0], pwd) == 0){
 		printf("This is the %s command.\n", pwd);
 	}
-	else if (strcmp(system_call, mkdir) == 0){
-		printf("This is the %s command.\n", mkdir);
+
+	else if (strcmp(system_call[0], mkdir) == 0){
+		if(num_tokens == 2){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the new directory
+			makeDir(system_call[1]);
+		} else {
+			printf("mkdir usage: mkdir [name of dir]\n");
+		}	
 	}
-	else if (strcmp(system_call, cd) == 0){
-		printf("This is the %s command.\n", cd);
+
+	else if (strcmp(system_call[0], cd) == 0){
+		if(num_tokens == 2){
+			// Only run if have the correct amount of parameters
+			// system_call[1] is the name of the directory to change to
+			changeDir(system_call[1]);
+		} else {
+			printf("cd usage: cd [name of dir]\n");
+		}
 	}
-	else if (strcmp(system_call, cp) == 0){
+
+	else if (strcmp(system_call[0], cp) == 0){
 		printf("This is the %s command.\n", cp);
 	}
-	else if (strcmp(system_call, mv) == 0){
+	
+	else if (strcmp(system_call[0], mv) == 0){
 		printf("This is the %s command.\n", mv);
 	}
-	else if (strcmp(system_call, rm) == 0){
+
+	else if (strcmp(system_call[0], rm) == 0){
 		printf("This is the %s command.\n", rm);
 	}
-	else if (strcmp(system_call, cat) == 0){
+
+	else if (strcmp(system_call[0], cat) == 0){
 		printf("This is the %s command.\n", cat);
 	}
+
 	else{
 		printf("%s is not a valid command in pseudo-shell.\n", system_call);
 	}

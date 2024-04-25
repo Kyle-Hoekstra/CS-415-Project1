@@ -44,12 +44,9 @@ int main(int argc, char *argv[]){
                 //fprintf(stderr, "about to smallbuff\n");
                 stdinCL_small = str_filler (stdinCL_big.command_list[i], " ");
 
-                //iterate through each smaller token to print
-                for (int j = 0; stdinCL_small.command_list[j] != NULL; j++)
-                {
-                    printf ("\t\tToken %d: %s\n", j + 1, stdinCL_small.command_list[j]);
-                    which_call(stdinCL_small.command_list[j]);
-                }
+                // Send the command in a delimeted string to parse calls
+                which_call(stdinCL_small.command_list, stdinCL_small.num_token);
+                
 
 			//free smaller tokens and reset variable
 			free_command_line(&stdinCL_small);
