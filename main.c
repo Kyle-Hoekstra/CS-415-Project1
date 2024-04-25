@@ -32,7 +32,6 @@ int main(int argc, char *argv[]){
                 break;
             }
                 // If no -f flag is listed, must be listening from stdin
-            printf("Reading from stdin|%s\n", line_buf);
             stdinCL_big = str_filler(line_buf, delim);
 
             for (int i = 0; stdinCL_big.command_list[i] != NULL; i++)
@@ -69,7 +68,6 @@ int main(int argc, char *argv[]){
             }
             else {
                 //File exists
-                printf("Now try to run tokenizer.\n");
                 tokenizer(argv[2]);
                 return 0;
             }
