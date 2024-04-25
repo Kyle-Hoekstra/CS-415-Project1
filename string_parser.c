@@ -91,6 +91,7 @@ command_line str_filler (char* buf, const char* delim)
 		// Get the token
 		//printf("%d\n", index);
 		token = strtok_r(myBuf, delim, &myBuf);
+		printf("Token is: %s\n", token);
 		//Get the len of the token
 		token_len = strlen(token) + 1;
 		//5

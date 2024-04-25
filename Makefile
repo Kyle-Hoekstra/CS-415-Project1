@@ -7,7 +7,7 @@ pseudo-shell: main.o lab1_skeleton.o string_parser.o command.o
 main.o: main.c
 	gcc -c -g main.c
 
-lab1_skeleton.o: lab1_skeleton.c
+lab1_skeleton.o: lab1_skeleton.c lab1_skeleton.h
 	gcc -c -g lab1_skeleton.c
 	
 string_parser.o: string_parser.c string_parser.h

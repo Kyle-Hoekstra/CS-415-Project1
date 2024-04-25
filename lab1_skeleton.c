@@ -9,19 +9,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include "string_parser.h"
+#include "lab1_skeleton.h"
 
 #define _GNU_SOURCE
 
-int my_main(int argc, char const *argv[])
+int tokenizer(char *myfile)
 {
-	//checking for command line argument
-	if (argc != 2)
-	{
-		printf ("Usage ./lab1.exe intput.txt\n");
-	}
-	//opening file to read
+	/* Takes a string to a file and tokenizes the contents
+		Uses stdin if there is no file
+	
+	*/
+
 	FILE *inFPtr;
-	inFPtr = fopen (argv[1], "r");
+
+	//opening file to read if there is a file to read
+	if(myfile != NULL){
+		inFPtr = fopen (myfile, "r");
+	} else {
+		//if not, read from stdin
+		inFPtr = stdin;
+	}
+	
 
 	//declear line_buffer
 	size_t len = 128;
